@@ -1,13 +1,18 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
+import axiosWithAuth from './../utils/axiosWithAuth';
 
 const Friend = (props) => {
-    // const { name, age, email } = props;
+
+    const history = useHistory();
+
+    const getFriend = (id) => {
+        history.push(`/friends/${id}`)
+    }
 
     return(
-        <div className='Friend'>
+        <div className='Friend' onClick={() => getFriend(props.friend.id)}>
             <h2>Name: {props.friend.name}</h2>
-            <p>Age: {props.friend.age}</p>
-            <p>Email: {props.friend.email}</p>
         </div>
     )
 }

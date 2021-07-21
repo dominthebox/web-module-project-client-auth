@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axiosWithAuth from './../utils/axiosWithAuth';
+import { useHistory } from 'react-router-dom';
 
 
 const initialUserInfo = {
@@ -12,12 +13,15 @@ const Login = () => {
 
     const [ userInfo, setUserInfo ] = useState(initialUserInfo);
 
-    const login = () => {
+    const history = useHistory();
+
+    const loginSubmit = () => {
         axiosWithAuth()
           .post(`http://localhost:5000/api/login`, userInfo)
           .then(res => {
             // console.log('Here is the data: ', res.data.payload);
             localStorage.setItem('token', res.data.payload)
+            history.push('/friends');
           })
           .catch(err => {
             console.log('Houston, we have a problem: ', err);
@@ -35,7 +39,7 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        login()
+        loginSubmit()
     }
 
 
