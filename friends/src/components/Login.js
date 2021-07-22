@@ -3,7 +3,7 @@ import axiosWithAuth from './../utils/axiosWithAuth';
 import { useHistory } from 'react-router-dom';
 
 
-const initialUserInfo = {
+const initialValues = {
     username: "",
     password: ""
 }
@@ -11,13 +11,13 @@ const initialUserInfo = {
 
 const Login = () => {
 
-    const [ userInfo, setUserInfo ] = useState(initialUserInfo);
+    const [ formValues, setFormValues ] = useState(initialValues);
 
     const history = useHistory();
 
     const loginSubmit = () => {
         axiosWithAuth()
-          .post(`http://localhost:5000/api/login`, userInfo)
+          .post(`http://localhost:5000/api/login`, formValues)
           .then(res => {
             // console.log('Here is the data: ', res.data.payload);
             localStorage.setItem('token', res.data.payload)
@@ -30,9 +30,9 @@ const Login = () => {
 
 
 
-    const handleChange = (e) => {
-        setUserInfo({
-          ...userInfo,
+    const handleChanges = (e) => {
+        setFormValues({
+          ...formValues,
           [e.target.name]: e.target.value
         })
     }
@@ -46,22 +46,25 @@ const Login = () => {
     return (
         <div className="App-header">
             <form onSubmit={handleSubmit}>
-                <input 
+                <label htmlFor="username">Username</label>
+                <input
+                    id="username" 
                     type="text"
                     name= 'username'
                     placeholder='Username'
-                    onChange={handleChange}
-                    value={userInfo.username}
+                    onChange={handleChanges}
+                    value={formValues.username}
                 />
-
-                <input 
+                <label htmlFor="password">Password</label>
+                <input
+                    id="password" 
                     type='password'
                     name='password'
                     placeholder='Password'
-                    onChange={handleChange}
-                    value={userInfo.password}
+                    onChange={handleChanges}
+                    value={formValues.password}
                 />
-                <button >Login</button>
+                <button>Login</button>
        </form>
         </div>
     )

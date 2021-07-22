@@ -3,7 +3,7 @@ import axiosWithAuth from '../utils/axiosWithAuth';
 import Friend from './Friend';
 import { useHistory } from 'react-router-dom';
 
-const Friends = () => {
+const FriendsList = (props) => {
 
     const [ friends, setFriends ] = useState([]);
 
@@ -11,7 +11,6 @@ const Friends = () => {
         axiosWithAuth()
         .get('/friends')
         .then(res =>{
-            console.log(res.data)
             setFriends(res.data)
         })
         .catch(err => {
@@ -31,6 +30,7 @@ const Friends = () => {
 
     return(
         <div>
+            <h3>Current Friends:</h3>
             {friends.map(friend => {
                 // return <Friend key={friend.id} friend={friend}/>
                 return <h2 onClick={() => getFriends(friend.id)} className='friend-name'>{friend.name}</h2>
@@ -39,4 +39,4 @@ const Friends = () => {
     )
 }
 
-export default Friends;
+export default FriendsList;
